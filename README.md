@@ -1,31 +1,86 @@
+# Caesarova šifra
 
-> Otevřít tuto stránku v aplikaci [https://smutnyjan.github.io/pxt-caesar-cipher-extension/](https://smutnyjan.github.io/pxt-caesar-cipher-extension/)
+## Namespace
+```
+cipher
+```
+## Popis
+Rozšíření poskytuje čtyři metody pro zašifrování a dešifrování textu/znaku pomocí Caesarovy šifry s libovolným posunem. Z důvodu jednoduššího překladu rozšíření pracuje pouze s anglickou abecedou, je ale schopno přeložit diakritiku na znak bez diakritiky. Pokud ovšem zadáme jakýkoli jiný znak (číslice, speciální znaky), znak se nepřeloží a zůstane tak, jak je.
 
-## Použít jako rozšíření
+Do bloků, které zašifrují/dešifrují znak je sice možné zadat víceznakový text, avšak rozšíření vždy vezme pouze první znak.
+ 
+## Metody
+### Zašifruj text %text caesarovou šifrou s posunem %key
+```
+function encryptText(text: string, key: number): string
+```
+- Zašiftuje zadaný text caesarovou šifrou s libovolným posunem
+- Parametry:
+    - text k zašifrování (text)
+    - klíč (posun) - může být kladný i záporný (číslo)
+- Návratová hodnota: zašifrovaný text (text)
 
-Toto úložiště lze přidat jako **rozšíření** v aplikaci MakeCode.
+### Dešifruj text %text caesarovou šifrou s posunem %key
+```
+function decryptText(text: string, key: number): string
+```
+- Dešiftuje zadaný text caesarovou šifrou s libovolným posunem
+- Parametry:
+    - text k dešifrování (text)
+    - klíč (posun) - může být kladný i záporný (číslo)
+- Návratová hodnota: dešifrovaný text (text)
 
-* otevřít [https://makecode.microbit.org/](https://makecode.microbit.org/)
-* klikněte na možnost **Nový projekt**
-* klikněte na možnost **Rozšíření** v nabídce s ozubeným kolem
-* vyhledat **https://github.com/smutnyjan/pxt-caesar-cipher-extension** a importovat
+### Zašifruj znak %character caesarovou šifrou s posunem %key
+```
+function encryptCharacter(character: string, key: number): string
+```
+- Zašiftuje zadaný znak caesarovou šifrou s libovolným posunem
+- Parametry:
+    - text k zašifrování (text)
+    - klíč (posun) - může být kladný i záporný (číslo)
+- Návratová hodnota: zašifrovaný znak (text)
+#### Dešifruj znak %character caesarovou šifrou s posunem %key
+```
+decryptCharacter(character: string, key: number): string
+```
+- Dešiftuje zadaný znak caesarovou šifrou s libovolným posunem
+- Parametry:
+    - text k dešifrování (text)
+    - klíč (posun) - může být kladný i záporný (číslo)
+- Návratová hodnota: dešifrovaný znak (text)
 
-## Upravit tento projekt ![Odznak stavu sestavení](https://github.com/smutnyjan/pxt-caesar-cipher-extension/workflows/MakeCode/badge.svg)
+## Příklady
 
-Slouží k úpravě tohoto úložiště v aplikaci MakeCode.
+### Použití metod pro zašifrování a dešifrování textu
 
-* otevřít [https://makecode.microbit.org/](https://makecode.microbit.org/)
-* klikněte na možnost **Import** a poté na **Import adresy URL**
-* vložte **https://github.com/smutnyjan/pxt-caesar-cipher-extension** a klikněte na možnost import
+#### Bloky
+![Použití metod z rozšíření](https://github.com/SmutnyJan/pxt-caesar-cipher-extension/blob/master/images/usageexample.png)
+#### Kód
+```
+basic.showString(cipher.encryptText("ahoj", -2))
+basic.showString(cipher.decryptText("fmto", 5))
+```
 
-## Náhled bloků
+### Použití metod pro zašifrování a dešifrování znaku
+#### Bloky
+![Použití vytvoření funkce](https://github.com/SmutnyJan/pxt-caesar-cipher-extension/blob/master/images/usageexample2.png)
+![Zašifrování](https://github.com/SmutnyJan/pxt-caesar-cipher-extension/blob/master/images/encode.png)
+![Dešifrofání](https://github.com/SmutnyJan/pxt-caesar-cipher-extension/blob/master/images/decode.png)
 
-Tento obrázek znázorňuje kód z Bloků od posledního potvrzení v hlavní verzi.
-Tento obrázek se může aktualizovat až za několik minut.
-
-![Vykreslený náhled bloků](https://github.com/smutnyjan/pxt-caesar-cipher-extension/raw/master/.github/makecode/blocks.png)
-
-#### Metadata (slouží k vyhledávání, vykreslování)
-
-* for PXT/microbit
-<script src="https://makecode.com/gh-pages-embed.js"></script><script>makeCodeRender("{{ site.makecode.home_url }}", "{{ site.github.owner_name }}/{{ site.github.repository_name }}");</script>
+#### Kód
+```
+function Zasifruj (text: string, posun: number) {
+    for (let i = 0; i <= text.length - 1; i++) {
+        konecnyText = "" + konecnyText + cipher.encryptCharacter(text.charAt(i), posun)
+    }
+    return konecnyText
+}
+function Desifruj (text: string, posun: number) {
+    for (let j = 0; j <= text.length - 1; j++) {
+        konecnyText = "" + konecnyText + cipher.decryptCharacter(text.charAt(j), posun)
+    }
+    return konecnyText
+}
+let konecnyText = ""
+basic.showString("" + (Zasifruj("microbit", 5)))
+```
