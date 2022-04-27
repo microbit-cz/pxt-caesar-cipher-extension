@@ -54,18 +54,20 @@ decryptCharacter(character: string, key: number): string
 ### Použití metod pro zašifrování a dešifrování textu
 
 #### Bloky
-![Použití metod z rozšíření](https://github.com/SmutnyJan/pxt-caesar-cipher-extension/blob/master/images/usageexample.png)
+![Použití metod z rozšíření](https://github.com/microbit-cz/pxt-caesar-cipher-extension/blob/master/images/usageexample.png)
 #### Kód
 ```
 basic.showString(cipher.encryptText("ahoj", -2))
 basic.showString(cipher.decryptText("fmto", 5))
 ```
+Demo  [https://github.com/microbit-cz/pxt-caesar-cipher-demo-easy](https://github.com/microbit-cz/pxt-caesar-cipher-demo-easy)
+
 
 ### Použití metod pro zašifrování a dešifrování znaku
 #### Bloky
-![Použití vytvoření funkce](https://github.com/SmutnyJan/pxt-caesar-cipher-extension/blob/master/images/usageexample2.png)
-![Zašifrování](https://github.com/SmutnyJan/pxt-caesar-cipher-extension/blob/master/images/encode.png)
-![Dešifrofání](https://github.com/SmutnyJan/pxt-caesar-cipher-extension/blob/master/images/decode.png)
+![Použití vytvoření funkce](https://github.com/microbit-cz/pxt-caesar-cipher-extension/blob/master/images/usageexample2.png)
+![Zašifrování](https://github.com/microbit-cz/pxt-caesar-cipher-extension/blob/master/images/encode.png)
+![Dešifrofání](https://github.com/microbit-cz/pxt-caesar-cipher-extension/blob/master/images/decode.png)
 
 #### Kód
 ```
@@ -84,3 +86,5 @@ function Desifruj (text: string, posun: number) {
 let konecnyText = ""
 basic.showString("" + (Zasifruj("microbit", 5)))
 ```
+Demo  [https://github.com/microbit-cz/pxt-caesar-cipher-demo-hard](https://github.com/microbit-cz/pxt-caesar-cipher-demo-hard)
+
