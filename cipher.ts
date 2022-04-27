@@ -10,25 +10,9 @@ namespace cipher {
 
     export function encryptText(text: string, key: number): string {
         let finalText = "";
-        text = removeDiacritics(text.toLowerCase());
 
         for (let i = 0; i < text.length; i++) {
-            let indexOfChar = characters.indexOf(text[i]);
-            if (indexOfChar != -1) {
-                let finalIndex = indexOfChar + key;
-                if (finalIndex >= characters.length) {
-                    finalIndex = finalIndex % characters.length;
-                }
-                else if (finalIndex < 0) {
-
-                    finalIndex = characters.length - ((-finalIndex) % (characters.length - 1));
-                }
-                finalText += characters[finalIndex % characters.length];
-            }
-
-            else {
-                finalText += text[i];
-            }
+            finalText += encryptCharacter(text[i], key)
         }
         return finalText;
     }
@@ -41,27 +25,9 @@ namespace cipher {
     //% block="Dešifruj text %text caesarovou šifrou s posunem %key"
     export function decryptText(text: string, key: number): string {
         let finalText = "";
-        text = removeDiacritics(text.toLowerCase());
-
-
 
         for (let i = 0; i < text.length; i++) {
-            let indexOfChar = characters.indexOf(text[i]);
-            if (indexOfChar != -1) {
-                let finalIndex = indexOfChar - key;
-                if (finalIndex >= characters.length) {
-                    finalIndex = finalIndex % characters.length;
-                }
-                else if (finalIndex < 0) {
-
-                    finalIndex = characters.length - ((-finalIndex) % (characters.length - 1));
-                }
-                finalText += characters[finalIndex % characters.length];
-            }
-
-            else {
-                finalText += text[i];
-            }
+            finalText += decryptCharacter(text[i], key)
         }
         return finalText;
     }
@@ -83,6 +49,8 @@ namespace cipher {
 
                 finalIndex = characters.length - ((-finalIndex) % (characters.length - 1));
             }
+            serial.writeLine(characters[finalIndex % characters.length])
+
             return characters[finalIndex % characters.length];
         } else {
             return character;
@@ -124,108 +92,80 @@ namespace cipher {
     }
 
     function checkCharForDiacritics(char: string): string {
-        let aChars = ["á", "å", "ä", "â", "ą", "ā", "à", "ã", "â", "ă", "ả", "ạ"]
-        let cChars = ["č", "ĉ", "ç", "ć"]
-        let dChars = ["ď", "đ"]
-        let eChars = ["é", "ě", "è", "ê", "ë", "ę", "ė", "ē"]
-        let gChars = ["ĝ", "ģ", "ǧ"]
-        let hChars = ["ĥ", "ȟ"]
-        let iChars = ["í", "î", "ï"]
-        let kChars = ["ķ"]
-        let lChars = ["ł", "ĺ", "ľ"]
-        let nChars = ["ň", "ņ", "ń", "ñ"]
-        let oChars = ["ó", "ø", "õ", "ö", "ô", "ő", "ơ"]
-        let rChars = ["ř", "ŕ"]
-        let sChars = ["š", " ś", "ș"]
-        let tChars = ["ť", "ț"]
-        let uChars = ["ú", "ů", "ŭ", "ü", "ù", "û", "ų", "ū", "ű", "û", "ư"]
-        let yChars = ["ý", "ÿ"]
-        let zChars = ["ž", "ź", "ż"]
-
-        for (const element of aChars) {
-            if (element == char) {
-                return "a"
-            }
-        }
-        for (const element of cChars) {
-            if (element == char) {
-                return "c"
-            }
-        }
-        for (const element of dChars) {
-            if (element == char) {
-                return "d"
-            }
-        }
-        for (const element of eChars) {
-            if (element == char) {
-                return "e"
-            }
-        }
-        for (const element of gChars) {
-            if (element == char) {
-                return "g"
-            }
-        }
-        for (const element of hChars) {
-            if (element == char) {
-                return "h"
-            }
-        }
-        for (const element of iChars) {
-            if (element == char) {
-                return "i"
-            }
-        }
-        for (const element of kChars) {
-            if (element == char) {
-                return "k"
-            }
-        }
-        for (const element of lChars) {
-            if (element == char) {
-                return "l"
-            }
-        }
-        for (const element of nChars) {
-            if (element == char) {
-                return "n"
-            }
-        }
-        for (const element of oChars) {
-            if (element == char) {
-                return "o"
-            }
-        }
-        for (const element of rChars) {
-            if (element == char) {
-                return "r"
-            }
-        }
-        for (const element of sChars) {
-            if (element == char) {
-                return "s"
-            }
-        }
-        for (const element of tChars) {
-            if (element == char) {
-                return "t"
-            }
-        }
-        for (const element of uChars) {
-            if (element == char) {
-                return "u"
-            }
-        }
-        for (const element of yChars) {
-            if (element == char) {
-                return "y"
-            }
-        }
-        for (const element of zChars) {
-            if (element == char) {
-                return "z"
-            }
+        let dict: any = {
+            'á': 'a',
+            'å': 'a',
+            'ä': 'a',
+            'â': 'a',
+            'ą': 'a',
+            'ā': 'a',
+            'à': 'a',
+            'ã': 'a',
+            'ă': 'a',
+            'ả': 'a',
+            'ạ': 'a',
+            'č': 'c',
+            'ĉ': 'c',
+            'ç': 'c',
+            'ć': 'c',
+            'ď': 'd',
+            'đ': 'd',
+            'é': 'e',
+            'ě': 'e',
+            'è': 'e',
+            'ê': 'e',
+            'ë': 'e',
+            'ę': 'e',
+            'ė': 'e',
+            'ē': 'e',
+            'ĝ': 'g',
+            'ģ': 'g',
+            'ǧ': 'g',
+            'ĥ': 'h',
+            'ȟ': 'h',
+            'í': 'i',
+            'î': 'i',
+            'ï': 'i',
+            'ķ': 'k',
+            'ł': 'l',
+            'ĺ': 'l',
+            'ľ': 'l',
+            'ň': 'n',
+            'ņ': 'n',
+            'ń': 'n',
+            'ñ': 'n',
+            'ó': 'o',
+            'ø': 'o',
+            'õ': 'o',
+            'ö': 'o',
+            'ô': 'o',
+            'ő': 'o',
+            'ơ': 'o',
+            'ř': 'r',
+            'ŕ': 'r',
+            'š': 's',
+            'ś': 's',
+            'ș': 's',
+            'ť': 't',
+            'ț': 't',
+            'ú': 'u',
+            'ů': 'u',
+            'ŭ': 'u',
+            'ü': 'u',
+            'ù': 'u',
+            'û': 'u',
+            'ų': 'u',
+            'ū': 'u',
+            'ű': 'u',
+            'ư': 'u',
+            'ý': 'y',
+            'ÿ': 'y',
+            'ž': 'z',
+            'ź': 'z',
+            'ż': 'z'
+        };
+        if (dict[char] != undefined) {
+            return dict[char]
         }
         return char
     }
