@@ -1,13 +1,13 @@
 //% weight=100 color=#ff6601 icon="\uf023" block="Šifra"
 namespace cipher {
     const characters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+    
     /**
      * Zašiftuje zadaný text caesarovou šifrou s libovolným posunem
      * @text Text k zašifrování
      * @key Posun
      */
     //% block="Zašifruj text %text caesarovou šifrou s posunem %key"
-
     export function encryptText(text: string, key: number): string {
         let finalText = "";
 
@@ -33,10 +33,10 @@ namespace cipher {
     }
 
     /**
- * Zašiftuje zadaný znak caesarovou šifrou s libovolným posunem
- * @znak Znak k zašifrování
- * @key Posun
- */
+     * Zašiftuje zadaný znak caesarovou šifrou s libovolným posunem
+     * @znak Znak k zašifrování
+     * @key Posun
+     */
     //% block="Zašifruj znak %character caesarovou šifrou s posunem %key"
     export function encryptCharacter(character: string, key: number): string {
         character = checkCharForDiacritics(character.toLowerCase()[0])
